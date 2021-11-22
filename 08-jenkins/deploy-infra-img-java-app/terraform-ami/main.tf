@@ -19,6 +19,6 @@ variable "versao" {
 
 output "ami" {
   value = [
-    "AMI: ${aws_ami_from_instance.ami-jenkins.id}"
+    "AMI: ${aws_ami_from_instance.ami-jenkinsmau.id}"
   ]
 }
