@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "sa-east-1"
 }
 
 data "http" "myip" {
@@ -7,9 +7,16 @@ data "http" "myip" {
 }
 
 resource "aws_instance" "dev_img_deploy_jenkins" {
-  ami           = "ami-09e67e426f25ce0d7"
+  ami           = "ami-05f235421e89fd125"
   instance_type = "t2.micro"
-  key_name      = "chave-jenkins"
+  key_name      = "treinamentoitau_mauricio2"
+  subnet_id                   = "subnet-013b710125e49d6a7"
+  associate_public_ip_address = true
+  root_block_device {
+    encrypted   = true
+    volume_size = 8
+  }
+
   tags = {
     Name = "dev_img_deploy_jenkins"
   }
@@ -19,6 +26,7 @@ resource "aws_instance" "dev_img_deploy_jenkins" {
 resource "aws_security_group" "acesso_jenkins_dev_img" {
   name        = "acesso_jenkins_dev_img"
   description = "acesso_jenkins_dev_img inbound traffic"
+  vpc_id      = "vpc-006b099589ba3289e"
 
   ingress = [
     {

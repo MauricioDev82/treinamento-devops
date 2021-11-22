@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "sa-east-1"
 }
 
 data "http" "myip" {
@@ -7,9 +7,15 @@ data "http" "myip" {
 }
 
 resource "aws_instance" "jenkins" {
-  ami           = "ami-09e67e426f25ce0d7"
-  instance_type = "t2.large"
-  key_name      = "treinamento-turma1_itau"
+  ami                         = "ami-05f235421e89fd125"
+  instance_type               = "t2.large"
+  key_name                    = "treinamentoitau_mauricio2"
+  subnet_id                   = "subnet-013b710125e49d6a7"
+  associate_public_ip_address = true
+  root_block_device {
+    encrypted   = true
+    volume_size = 60
+  }
   tags = {
     Name = "jenkins"
   }
@@ -19,14 +25,14 @@ resource "aws_instance" "jenkins" {
 resource "aws_security_group" "jenkins" {
   name        = "acessos_jenkins"
   description = "acessos_jenkins inbound traffic"
-
+  vpc_id      = "vpc-006b099589ba3289e"
   ingress = [
     {
       description      = "SSH from VPC"
       from_port        = 22
       to_port          = 22
       protocol         = "tcp"
-      cidr_blocks      = ["${chomp(data.http.myip.body)}/32"]
+      cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
       prefix_list_ids  = null,
       security_groups : null,
@@ -37,7 +43,7 @@ resource "aws_security_group" "jenkins" {
       from_port        = 8080
       to_port          = 8080
       protocol         = "tcp"
-      cidr_blocks      = ["${chomp(data.http.myip.body)}/32"]
+      cidr_blocks      = ["0.0.0.0/0"]
       ipv6_cidr_blocks = ["::/0"]
       prefix_list_ids  = null,
       security_groups : null,
@@ -72,6 +78,6 @@ output "jenkins" {
     "private: ${aws_instance.jenkins.private_ip}",
     "public: ${aws_instance.jenkins.public_ip}",
     "public_dns: ${aws_instance.jenkins.public_dns}",
-    "ssh -i ~/Desktop/devops/treinamentoItau ubuntu@${aws_instance.jenkins.public_dns}"
+    "ssh -i ~/.ssh/treinamentoitau_mauricio2.pem ubuntu@${aws_instance.jenkins.public_dns}"
   ]
 }

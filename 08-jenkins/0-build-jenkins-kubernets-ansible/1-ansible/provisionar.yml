@@ -17,10 +17,7 @@
 
     - name: "Instala unzip"
       shell: "sudo apt install unzip -y"
-
-    - name: "Instala awscli"
-      shell: "apt install awscli -y"
-      
+     
     - name: "Instala java"
       shell: "apt install default-jdk -y"
 
@@ -49,11 +46,43 @@
     #   register: ps
     # - debug: var=ps.stdout_lines
 
-    - shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-      register: ps
-    - debug:
-        msg: "Segredo do jenkins: '{{ ps.stdout_lines }}' "
+    #- shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+    #  register: ps
+    #- debug:
+       # msg: "Segredo do jenkins: '{{ ps.stdout_lines }}' "
         # msg: "Segredo do jenkins: '{{ ps.stderr_lines }}' " # quando quiser ver o erro
+    - name: "Install terraform passo 1"
+      shell: sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+
+    - name: "Install terraform passo 2"
+      shell: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+    - name: "Install terraform passo 3"
+      shell: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+    - name: "Install terraform passo 4"
+      shell: sudo apt-get update && sudo apt-get install terraform
+
+    - name: "Install terraform passo 1"
+      shell: sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+
+    - name: "Install terraform passo 2"
+      shell: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+    - name: "Install terraform passo 3"
+      shell: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+    - name: "Install terraform passo 4"
+      shell: sudo apt-get update && sudo apt-get install terraform -y
+
+    - name: "Copia chave privada"
+      copy:
+        src: "/home/ubuntu/.ssh/treinamentoitau_mauricio2.pem"
+        dest: "/home/ubuntu/.ssh/treinamentoitau_mauricio2.pem"
+        owner: jenkins
+        group: jenkins
+        mode: '0400'
+
     
 
     
