@@ -83,6 +83,18 @@
         group: jenkins
         mode: '0400'
 
+    - name: "Copia Chave privada ssh"
+      copy:
+        src: "/home/ubuntu/.ssh/treinamentoitau_mauricio2.pem"
+        dest: "/var/lib/jenkins/.ssh/treinamentoitau_mauricio2.pem"
+
+    - name: "Dar permissão no arquivo"
+      shell: chmod 400 /var/lib/jenkins/.ssh/treinamentoitau_mauricio2.pem
+
+    - name: "Dar permissão no arquivo"
+      shell: chown jenkins:jenkins /var/lib/jenkins/.ssh/treinamentoitau_mauricio2.pem
+
+
     
 
     
