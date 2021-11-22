@@ -14,7 +14,7 @@ resource "aws_instance" "dev_img_deploy_jenkins" {
   associate_public_ip_address = true
   root_block_device {
     encrypted   = true
-    volume_size = 8
+    volume_size = 60
   }
 
   tags = {
