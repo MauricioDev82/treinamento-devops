@@ -78,6 +78,6 @@ output "dev_img_deploy_jenkins" {
     "resource_id: ${aws_instance.dev_img_deploy_jenkins.id}",
     "public_ip: ${aws_instance.dev_img_deploy_jenkins.public_ip}",
     "public_dns: ${aws_instance.dev_img_deploy_jenkins.public_dns}",
-    "ssh -i /var/lib/jenkins/.ssh/id_rsa ubuntu@${aws_instance.dev_img_deploy_jenkins.public_dns}"
+    "ssh -i /var/lib/jenkins/.ssh/treinamentoitau_mauricio2 ubuntu@${aws_instance.dev_img_deploy_jenkins.public_dns}"
   ]
 }
