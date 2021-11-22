@@ -2,7 +2,7 @@ provider "aws" {
   region = "sa-east-1"
 }
 
-resource "aws_ami_from_instance" "ami-jenkins" {
+resource "aws_ami_from_instance" "ami-jenkinsmau" {
   name               = "terraform-jenkins-${var.versao}"
   source_instance_id = var.resource_id
 }
